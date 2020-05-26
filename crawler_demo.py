@@ -15,10 +15,10 @@ import os
 
 class CrawlerBot():
 	def __init__(self):
-		manger = ChromeDriverManager().install()
-		self.driver = webdriver.Chrome(executable_path=manger)
+		# manger = ChromeDriverManager().install()
+		# self.driver = webdriver.Chrome(manger)
 
-		# self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())		
+		self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install())		
 		self.link = 'https://xembao.vn'
 		self.home_page_path = str(Path.home())
 		self.driver.get(self.link)
@@ -50,9 +50,9 @@ class CrawlerBot():
 		'''
 
 		# Test only
-		# script_load_all = '''
-		# window.scrollTo(0, document.body.scrollHeight);
-		# '''
+		script_load_all = '''
+		window.scrollTo(0, document.body.scrollHeight);
+		'''
 
 		last_height = self.driver.execute_script("return document.body.scrollHeight")
 		while True:
@@ -81,7 +81,7 @@ class CrawlerBot():
 
 	def save_publication_source(self, publication_folder, img_links, publication):
 		imgs_list = []
-		for img_url in img_links:
+		for img_url in img_links[:10]:
 			response = requests.get(img_url)
 			img = Image.open(BytesIO(response.content))
 			imgs_list.append(img)
@@ -128,9 +128,9 @@ class CrawlerBot():
 
 				# Save all
 				self.save_publication_source(publication_folder, img_links, publication)
-				# break
+				break
 			print('-------------')
-			# break
+			break
 		return img_links
 
 bot = CrawlerBot()
