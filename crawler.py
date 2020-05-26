@@ -134,7 +134,7 @@ class CrawlerBot():
 		return img_links
 
 bot = CrawlerBot()
-img_links = bot.crawl()
+bot.crawl()
 # bot.driver.get(img_links[0])
 
 # browser.quit()
